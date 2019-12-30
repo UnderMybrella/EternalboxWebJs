@@ -1,0 +1,6 @@
+rootProject.name = 'EternalboxWeb'
+
+include ':common'
+include ':raphael'
+include ':jukebox_go'
+include ':webaudio'
