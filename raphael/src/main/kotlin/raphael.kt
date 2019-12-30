@@ -394,4 +394,5 @@ external interface RaphaelStatic {
     var vml: Boolean
 }
 @JsModule("raphael")
+@JsNonModule
 external val Raphael: RaphaelStatic = definedExternally
