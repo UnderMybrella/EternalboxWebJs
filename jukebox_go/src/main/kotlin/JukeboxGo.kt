@@ -13,6 +13,7 @@ import kotlin.js.Json
 import kotlin.js.json
 import kotlin.math.*
 
+@Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
 class Jukebox {
     var remixer: dynamic = null
     var player: dynamic = null
@@ -302,7 +303,7 @@ class Jukebox {
         }
     }
 
-    fun gotTheAnalysis(profile: dynamic) {
+    fun gotTheAnalysis(profile: EternalboxAnalysis) {
         showInfo("Loading track...")
         remixer.remixTrack(profile, jukeboxData) { state: dynamic, t: dynamic, _percent: Double ->
             track = t
@@ -381,7 +382,7 @@ class Jukebox {
         }
 
         analysisGetXhr.then<dynamic>({ data: Any, _: String, _: JQueryXHR ->
-            gotTheAnalysis(data)
+            gotTheAnalysis(EternalboxAnalysis(data as Json))
         }, { jqXHR: JQueryXHR, _: String, _: Any ->
             if (jqXHR.status.toInt() == 404) {
                 val analysisPutXhr = ajax {
@@ -392,7 +393,7 @@ class Jukebox {
                 }
 
                 analysisPutXhr.then<dynamic>({ data: Any, _: String, _: JQueryXHR ->
-                    gotTheAnalysis(data)
+                    gotTheAnalysis(EternalboxAnalysis(data as Json))
                 }, { _, textStatus, errorThrown ->
                     showInfo("Sorry, can't find info for that track: $textStatus ($errorThrown)")
                 })
@@ -1375,7 +1376,7 @@ class Jukebox {
             hideAll()
         } else {
 //            remixer = createJRemixer(context)
-            player = remixer.getPlayer()
+//            player = remixer.getPlayer()
             processParams()
             checkIfStarred()
         }
