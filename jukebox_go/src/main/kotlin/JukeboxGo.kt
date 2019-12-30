@@ -382,6 +382,7 @@ class Jukebox {
         }
 
         analysisGetXhr.then<dynamic>({ data: Any, _: String, _: JQueryXHR ->
+            println("Analysis: $data")
             gotTheAnalysis(EternalboxAnalysis(data as Json))
         }, { jqXHR: JQueryXHR, _: String, _: Any ->
             if (jqXHR.status.toInt() == 404) {
